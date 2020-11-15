@@ -3,7 +3,7 @@ function TreeNode(x) {
     this.lchild = null;
     this.rchild = null;
 }
-
+//比较字符串法，此法有漏洞，当串值为特殊情况时不可行
 function findIsChild(tree1, tree2) {
     //对两者均前序遍历，如果前者遍历字符串包括后者，则后者为前者子结构
     var t1 = new Array();
@@ -36,4 +36,34 @@ function preFind(tree,t){
     t.push(tree.val);
     preFind(tree.lchild,t);
     preFind(tree.rchild,t);
+}
+//遍历两树法，不用比较字符串
+
+function IsChild(tree1,tree2){
+    if(!tree1||!tree2){
+        return false;
+    }
+
+    if(tree1.val != tree2.val){
+        return IsChild(tree1.lchild,tree2)||IsChild(tree1.rchild,tree2);
+    }else{
+        if(root(tree1,tree2)){
+            return true;
+        }else{
+            return IsChild(tree1.lchild,tree2)||IsChild(tree1.rchild,tree2);
+        }
+    }
+}
+
+function root(tree1,tree2){
+    if(!tree2){
+        return true;
+    }
+
+    if(tree1&&tree2&&tree1.val == tree2.val){//tree1 tree2不为空
+        return (root(tree1.lchild,tree2.lchild)&&root(tree1.rchild,tree2.rchild));
+    }else{
+        return false;
+    }
+    
 }
