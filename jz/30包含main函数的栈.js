@@ -1,21 +1,29 @@
-function StackStruct(){
-    var top = -1;
-    var stack = [];
-    var min = Number.MAX_VALUE;
-}
+var stack = [];
+var top = -1;
+var minStack = [];
+var minTop = -1;
 
 //push
 function push(x){
-    var stack = new StackStruct();
-    stack.stack[++top] = x;
-    if(stack.min>x){
-        stack.min = x;
+    stack[++top]  = x;
+    if(minTop==-1){
+        minStack[++minTop] = x;
+    }else{
+        if(minStack[minTop]>=x){
+            minStack[++minTop] = x;
+        }else{
+            var temp = minStack[minTop];
+            minStack[++minTop] = temp;
+        }
     }
 }
 //pop
-function pop(stack){
+function pop(){
     if(stack.top!=-1){
-        return stack.stack[top--];
-        
+        minStack[minTop--];//辅助栈数据也弹出
+        return stack[top--];
     }
+}
+function min(){
+    return minStack[minTop];//直接返回栈顶元素即可
 }
