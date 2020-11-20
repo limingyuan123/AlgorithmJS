@@ -1,42 +1,44 @@
-var str = [2,4,1,8,5,10];
-var k = 4;
-function findMinK(str,k){
-    if(str.length <k){
-        return null;
-    }
-    //排序str
-    for(let i=str.length-1;i>=0;i--){
-        for(let j=0;j<i;j++){
-            if(str[j]>str[j+1]){
-                let tmp = str[j];
-                str[j] = str[j+1];
-                str[j+1] = tmp;
-            }
-        }
-    }
-    return str.slice(0,k);
-}
-let res = findMinK(str,k);
-console.log(res);
-//方法二：patiton函数法
-var array = [1,2,3,2,2,2,5,4,3];//1 2 2 2 2 3 3 4 5
-var k = 4;
+var array = [1,2,3,4];
 
-function findMinK(array,k) {
+function findMiddle(array) {
     if (array.length === 0) {
         return null;
     }
     var index = patition(array,0,array.length-1);
-    while(index!=(k-1)){
-        if(index>(k-1)){
+    var flag;
+    if(array.length%2 === 0){
+        flag = 0;//偶数
+    }else{
+        flag = 1;//奇数
+    }
+    while(index!=parseInt(array.length/2)){
+        if(index>parseInt(array.length/2)){
             index = patition(array,0,index-1);//这种情况只需排列前半部分即可
         }else{
             //这种情况只需排列后半部分即可
             index = patition(array,index+1,array.length-1);
         }
     }
-    return array.slice(0,index+1);
-    
+    if(flag){
+        return array[index];
+    }else{
+        //对index前的数找到一个最大值
+        var max = maxNum(array.slice(0,index));
+        return (array[index]+max)/2;
+    }
+}
+function maxNum(array){
+    for(let i=0;i<array.length;i++){
+        let j = i+1;
+        if(j<array.length){
+            if(array[i]>array[j]){
+                let tmp = array[i];
+                array[i] = array[j];
+                array[j] = tmp;
+            }
+        }
+    }
+    return array[array.length-1];
 }
 function patition(array, begin, end) {
     var tmp = array[begin];
@@ -63,5 +65,7 @@ function patition(array, begin, end) {
     array[begin] = tmp;
     return begin;
 }
-var res = findMinK(array,k);
+var res = findMiddle(array);
 console.log(res);
+
+//需要了解最大堆最小堆
