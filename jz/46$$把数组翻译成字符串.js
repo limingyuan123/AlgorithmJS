@@ -1,37 +1,41 @@
-var num = 12258;
-var flag = 0;
-//动态规划类
-function findMethod(str) {
-    var count = 0;
-    var counts = [];
-    if (str.length == 0) {
+//12258
+//动态规划类，自底向上
+let num = 12258;
+
+function trans(num) {
+    if (num == null || num < 0) {
         return null;
     }
-    for (let i = str.length-1; i >= 0; i--) {
+    var str = num + '';
+    var flag = transStr(str);
+    return flag;
+}
+
+function transStr(str) {
+    var dp = [];
+    var count = 0;
+    for (let i = str.length - 1; i >= 0; i--) {
         count = 0;
         if (i < str.length - 1) {
-            count = counts[i + 1];
+            count = dp[i + 1];
         } else {
             count = 1;
         }
         if (i < str.length - 1) {
-            let digit1 = str[i] - 0;
-            let digit2 = str[i + 1] - 0;
-            let coverted = digit1 * 10 + digit2;
-            if (coverted >= 10 && coverted <= 25) {
+            var digit1 = str[i] - 0;
+            var digit2 = str[i + 1] - 0;
+            if ((digit1 * 10 + digit2) >= 10 && (digit1 * 10 + digit2) <= 25) {
                 if (i < str.length - 2) {
-                    count += counts[i + 2];
+                    count += dp[i + 2];
                 } else {
                     count += 1;
                 }
             }
         }
-        counts[i] = count;
+        dp[i] = count;
     }
-    count = counts[0];
-    return count;
+    return dp[0];
 }
 
-
-let res = findMethod(num + "");
+let res = trans(num);
 console.log(res);
