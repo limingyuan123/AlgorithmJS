@@ -53,3 +53,50 @@ function reconstruction(num1,num2){
     return tree;
 }
 var res = reconstruction(num1,num2);
+
+
+//优化版，真正的建树以及打印出树
+function TreeNode(x) {
+    this.val = x;
+    this.left = null;
+    this.right = null;
+} 
+function reConstructBinaryTree(pre, vin) {
+    // write code here
+    if (pre.length != vin.length || pre.length === 0 || vin.length === 0) {
+        return null;
+    }
+    //递归来做
+    var tree = subCreateTree(pre, vin, 0, pre.length - 1, 0, vin.length - 1);
+    //打印出树
+    printTree(tree);
+}
+
+function subCreateTree(pre, vin, l1, r1, l2, r2) {
+    if (l1 > r1||l2 > r2) {
+        return null;
+    }
+    var tree = new TreeNode(pre[l1]);
+    for (var i = l2; i < r2; i++) {
+        if (vin[i] === pre[l1]) {
+            break;
+        }
+    }
+    if(l1<r1){
+        tree.left = subCreateTree(pre, vin, l1 + 1, i - l2 + l1, l2, i - 1);
+    }
+    if(l2<r2){
+        tree.right = subCreateTree(pre, vin, i - l2 + l1 +1, r1, i + 1, r2);
+    }
+    return tree;
+}
+function printTree(tree){
+    if(tree==null){
+        return;
+    }else{
+        console.log(tree.val);
+    }
+    printTree(tree.left);
+    printTree(tree.right);
+}
+reConstructBinaryTree([1,2,3,4,5,6,7],[3,2,4,1,6,5,7]);
