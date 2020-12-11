@@ -44,3 +44,51 @@ function printCircle(matrix, start, endR, endC) {
     }
 }
 var res = printMatrix(matrix, raw, column);
+
+
+//优化版 逻辑清晰
+var arr = [
+    
+]
+function printArr(arr){
+    if(arr.length === 0||arr[0].length === 0){
+        return null;
+    }
+    var raw = arr.length;
+    var col = arr[0].length;
+    var start = 0;
+    var res = [];
+    while(raw>start*2&&col>start*2){
+        printCicle(arr,raw,col,start,res);
+        start++;
+    }
+    return res;
+}
+function printCicle(arr,raw,col,start,res){
+    var endc = col-start;
+    var endr = raw-start;
+    //一 左到右
+    for(let i=start;i<endc;i++){
+        res.push(arr[start][i]);
+    }
+    //二 上到下 首个不要
+    if(endr>start+1){//至少两排
+        for(let i=start+1;i<endr;i++){
+            res.push(arr[i][endc-1])
+        }
+    }
+    //三 右到左 首个不要
+    if(endr>start+1&&endc>start+1){//至少两排两列
+        for(let i=endc-2;i>=start;i--){
+            res.push(arr[endr-1][i]);
+        }
+    }
+    //四 下到上 首个与末尾不要
+    if(endr>start+1&&endc>start+1){
+        for(let i = endr-2;i>start;i--){
+            res.push(arr[i][start]);
+        }
+    }
+}
+let res = printArr(arr);
+console.log(res);
