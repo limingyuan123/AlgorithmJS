@@ -51,4 +51,6 @@
 ##### 算法
 jz lc 牛客 面经
 jz牛客：19，26，27,35,39,48,66
+jz牛客：
+24FindPath  26Convert  27Permutation  31NumberOf1Between1AndN_Solution  32PrintMinNumber  33GetUglyNumber_Solution   35InversePairs归并（总结） 38TreeDepth（注意） 45Add（注意）  48match 52IsContinuous（注意有相同值）  53isNumeric(**总结情况，太多了)  59Print（之字形，知道两栈如何搞）  64maxInWindows  65hasPath
 lc:22 动规 17 回溯  236 二叉树最近公共祖先  399并查集  416背包 207图 208 前缀树
